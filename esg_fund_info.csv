@@ -1,0 +1,23 @@
+ticker,name,region,type,expense_ratio,total_assets,shares_outstanding,fund_family,category,inception_date
+ESGU,iShares ESG Aware MSCI USA ETF,US,ESG,,15716204544,,iShares,Large Blend,1480550400
+ESGV,Vanguard ESG U.S. Stock ETF,US,ESG,,11684505600,,Vanguard,Large Blend,1537228800
+SUSA,iShares ESG Optimized MSCI USA ETF,US,ESG,,3695765248,,iShares,Large Blend,1106524800
+DSI,iShares ESG MSCI KLD 400 ETF,US,ESG,,4924602880,,iShares,Large Blend,1163462400
+JUST,Goldman Sachs JUST U.S. Large Cap Equity ETF,US,ESG,,513580992,,Goldman Sachs,Large Blend,1528329600
+NULC,Nuveen ESG Large-Cap ETF,US,ESG,,55988344,,Nuveen,Large Blend,1559520000
+SUSL,iShares ESG MSCI USA Leaders ETF,US,ESG,,1038494272,,iShares,Large Blend,1557187200
+ESGD,iShares ESG Aware MSCI EAFE ETF,Developed_exUS,ESG,,11702863872,,iShares,Foreign Large Blend,1467072000
+VSGX,Vanguard ESG International Stock ETF,Developed_exUS,ESG,,6354143232,,Vanguard,Foreign Large Blend,1537228800
+ESGE,iShares ESG Aware MSCI EM ETF,Emerging,ESG,,6630414336,,iShares,Diversified Emerging Mkts,1467072000
+EMSG,Xtrackers MSCI Emerging Markets Climate Selection ETF,Emerging,ESG,,28997116,,Xtrackers,Diversified Emerging Mkts,1543881600
+EAGG,iShares ESG U.S. Aggregate Bond ETF,Fixed_Income,ESG,,4621775360,,iShares,Intermediate Core Bond,1539820800
+BGRN,iShares USD Green Bond ETF,Fixed_Income,ESG,,456619808,,iShares,Global Bond-USD Hedged,1542067200
+IVV,iShares Core S&P 500 ETF,US,Conventional,,750651899904,621550016.0,iShares,Large Blend,958348800
+VTI,Vanguard Total Stock Market Index Fund ETF Shares,US,Conventional,,2088924610560,743262976.0,Vanguard,Large Blend,990662400
+SPY,State Street SPDR S&P 500 ETF Trust,US,Conventional,,698270220288,917782016.0,State Street Investment Management,Large Blend,727660800
+EFA,iShares MSCI EAFE ETF,Developed_exUS,Conventional,,77836582912,938400000.0,iShares,Foreign Large Blend,997747200
+VEA,Vanguard FTSE Developed Markets Index Fund ETF Shares,Developed_exUS,Conventional,,307323502592,,Vanguard,Foreign Large Blend,1184889600
+VWO,Vanguard Emerging Markets Stock Index Fund,Emerging,Conventional,,158398922752,1418119936.0,Vanguard,Diversified Emerging Mkts,1109894400
+EEM,iShares MSCI Emerging Markets ETF,Emerging,Conventional,,30140446720,752400000.0,iShares,Diversified Emerging Mkts,1049673600
+AGG,iShares Core U.S. Aggregate Bond ETF,Fixed_Income,Conventional,,141223149568,572600000.0,iShares,Intermediate Core Bond,1064188800
+BNDW,Vanguard Total World Bond ETF,Fixed_Income,Conventional,,1600030080,,Vanguard,Global Bond-USD Hedged,1536019200
