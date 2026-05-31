@@ -4,14 +4,6 @@ A quantitative study examining whether ESG (Environmental, Social, Governance) E
 
 ---
 
-## Research Question
-
-> Do ESG ETF investors show conditional loyalty — holding positions during market downturns even when conventional investors redeem?
-
-This is tested using the **Organic Growth Rate (OGR)** metric and **Flow-Performance Sensitivity** regression (β_neg), following the methodology of Bollen (2007).
-
----
-
 ## Sample
 
 | Type | Tickers | Count |
