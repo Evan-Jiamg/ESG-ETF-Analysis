@@ -79,7 +79,7 @@ ESG-ETF-Analysis/
 ├── ETF_Config.py           # Constants: regions, periods, colors, style settings
 ├── ETF_Loader.py           # XLS parser and data loader (handles iShares XML quirks)
 ├── ETF_Analysis.py         # OGR computation, regression, summary statistics
-├── etf_charts.py           # All 8 publication-quality figures
+├── ETF_charts.py           # All 8 publication-quality figures
 │
 ├── ESG_ETF_Data/           # 19 iShares ESG ETF historical NAV files (.xls)
 ├── Traditional_ETF_Data/   # 5 conventional benchmark ETF files (.xls)
