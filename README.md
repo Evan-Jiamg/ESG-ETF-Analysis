@@ -135,17 +135,6 @@ This reproduces all CSVs in `ESG_ETF_CSV/` and all charts in `Analysis_Graph/`.
 
 ---
 
-## Chart Style
-
-All figures follow academic publication standards:
-- **Font:** Times New Roman, 10 pt base
-- **Lines:** 1.5 pt data lines; distinct line styles for B&W reproducibility
-- **Colors:** Blue family (ESG) · Orange (Conventional benchmarks)
-- **Output:** PDF (vector, for LaTeX) + PNG (300 dpi, for Word/slides)
-- Legends placed below axes to avoid overlapping data
-
----
-
 ## Dependencies
 
 | Package | Version tested |
