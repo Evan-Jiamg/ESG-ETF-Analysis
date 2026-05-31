@@ -1,0 +1,6 @@
+region,esg_n,esg_beta_neg_mean,esg_beta_neg_median,esg_pct_below_zero,conv_n,conv_beta_neg,difference
+US,7,0.563,0.101,0.286,1,0.186,0.377
+Developed exUS,3,0.194,-0.258,0.667,1,0.028,0.166
+Emerging,3,-0.369,-0.538,0.667,1,0.184,-0.553
+Fixed Income,5,2.102,2.14,0.2,1,0.128,1.974
+Global,1,0.257,0.257,0.0,1,-0.849,1.106

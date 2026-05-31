@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+*.pyo
+Previous_Analysis/
+.DS_Store
