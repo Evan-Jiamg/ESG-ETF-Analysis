@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-from ETF_Config import PERIODS_SHORT, REGION_MAP, REGIONS, get_fund_type
+from ETF_Config import PERIODS_SHORT, REGION_MAP, REGIONS, REGION_BENCHMARK, get_fund_type
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -91,11 +91,14 @@ def period_flow_summary(monthly_flows):
 
 def flow_performance_sensitivity(monthly_flows):
     """
-    OGR ~ NAV_return regression for each ETF, overall and split by return sign.
+    OGR ~ NAV_return regression for each ETF, overall and split by the ETF's own return sign.
+
+    beta_negative / beta_positive are estimated on months when the ETF's own NAV return
+    is negative / positive (Bollen 2007 standard approach).
 
     Interpretation:
-      beta_negative close to 0 → investors don't redeem during downturns → high loyalty
-      beta_negative strongly positive → OGR falls sharply when returns are negative → low loyalty
+      beta_negative close to 0 → investors don't redeem when this ETF has negative returns → high loyalty
+      beta_negative strongly positive → OGR falls sharply when ETF return is negative → low loyalty
     """
     rows = []
     for ticker, df in monthly_flows.items():
@@ -109,24 +112,27 @@ def flow_performance_sensitivity(monthly_flows):
 
         slope, _, rval, pval, _ = stats.linregress(r, ogr)
 
+        # Split by each ETF's own return sign (Bollen 2007)
+        region   = REGION_MAP.get(ticker, '')
         neg_mask = r < 0
+        pos_mask = r > 0
+
         slope_neg = (stats.linregress(r[neg_mask], ogr[neg_mask]).slope
                      if neg_mask.sum() >= 5 else np.nan)
-
-        pos_mask = r > 0
         slope_pos = (stats.linregress(r[pos_mask], ogr[pos_mask]).slope
                      if pos_mask.sum() >= 5 else np.nan)
 
         rows.append({
-            'ticker':        ticker,
-            'type':          get_fund_type(ticker),
-            'region':        REGION_MAP.get(ticker, 'Unknown'),
-            'n_months':      len(idx),
-            'beta_all':      round(slope,     3),
-            'beta_negative': round(slope_neg, 3) if not np.isnan(slope_neg) else np.nan,
-            'beta_positive': round(slope_pos, 3) if not np.isnan(slope_pos) else np.nan,
-            'r_squared':     round(rval ** 2, 4),
-            'p_value':       round(pval,      4),
+            'ticker':         ticker,
+            'type':           get_fund_type(ticker),
+            'region':         region,
+            'n_months':       len(idx),
+            'n_down_months':  int(neg_mask.sum()),
+            'beta_all':       round(slope,     3),
+            'beta_negative':  round(slope_neg, 3) if not np.isnan(slope_neg) else np.nan,
+            'beta_positive':  round(slope_pos, 3) if not np.isnan(slope_pos) else np.nan,
+            'r_squared':      round(rval ** 2, 4),
+            'p_value':        round(pval,      4),
         })
 
     return pd.DataFrame(rows)

@@ -21,7 +21,7 @@ from matplotlib.lines import Line2D
 from ETF_Config import (
     PERIODS_SHORT, REGION_MAP, REGIONS,
     REGION_STYLES, TICKER_STYLES, EVENT_COLORS,
-    CONVENTIONAL_TICKERS, CONV_STYLE, get_fund_type,
+    CONVENTIONAL_TICKERS, CONV_STYLE, REGION_BENCHMARK, get_fund_type,
 )
 
 # ── Constants ─────────────────────────────────────────────────────────────────
@@ -410,8 +410,9 @@ def fig5_flow_sensitivity(sensitivity_df, monthly_flows):
     _zero_line(ax1, axis='v')
     ax1.set_yticks(range(n))
     ax1.set_yticklabels(df_sorted['ticker'], fontsize=8)
-    ax1.set_xlabel(r'$\beta_{neg}$  (OGR sensitivity, negative-return months)', fontsize=9)
-    ax1.set_title(r'$\beta_{neg}$ by ETF — ESG (blue) vs. Conventional (orange)', fontsize=10)
+    ax1.set_xlabel(r'$\beta_{neg}$  (OGR sensitivity, each ETF\'s own negative-return months)', fontsize=9)
+    ax1.set_title(r'$\beta_{neg}$ by ETF — ESG (blue) vs. Conventional (orange)'
+                  '\n' r'Negative months defined by each ETF\'s own NAV return $<$ 0', fontsize=10)
 
     legend_handles = [
         Patch(facecolor=REGION_STYLES[r]['color'], hatch=REGION_STYLES[r]['hatch'],
@@ -441,7 +442,7 @@ def fig5_flow_sensitivity(sensitivity_df, monthly_flows):
                     s=50, alpha=0.85, zorder=3, edgecolors='#333333', linewidths=0.5)
 
     _zero_line(ax2, axis='v')
-    ax2.set_xlabel(r'$\beta_{neg}$', fontsize=9)
+    ax2.set_xlabel(r'$\beta_{neg}$  (each ETF\'s own negative-return months)', fontsize=9)
     ax2.set_ylabel(r'$R^{2}$', fontsize=9)
     ax2.set_title(r'Signal Strength: $\beta_{neg}$ vs. $R^{2}$  (ESG vs Conv.)', fontsize=10)
 
@@ -461,17 +462,25 @@ def fig5_flow_sensitivity(sensitivity_df, monthly_flows):
 # ── fig6 – Downside Protection (all ETFs, ESG + Conv) ────────────────────────
 
 def fig6_downside_protection(monthly_flows):
-    # Use ESG-only average to define "down months" (avoids Conv bias)
-    esg_rets = pd.DataFrame({t: df['nav_return'] for t, df in monthly_flows.items()
-                             if get_fund_type(t) == 'ESG'})
-    avg_ret  = esg_rets.mean(axis=1)
-    down_idx = avg_ret[avg_ret < 0].index
-
-    down_rets = {}
+    # Define down months per ETF using its region's official benchmark (avoids circular definition)
+    down_rets   = {}
+    n_by_region = {}
     for ticker, df in monthly_flows.items():
+        region = REGION_MAP.get(ticker, '')
+        bm     = REGION_BENCHMARK.get(region)
+        if not bm or bm not in monthly_flows:
+            continue
+        bm_ret   = monthly_flows[bm]['nav_return'].dropna()
+        down_idx = bm_ret[bm_ret < 0].index
+        n_by_region[region] = len(down_idx)
         r = df.loc[df.index.isin(down_idx), 'nav_return'].dropna()
         if len(r) >= 3:
             down_rets[ticker] = r.mean() * 100
+
+    # Build subtitle showing n per region
+    n_note = '  |  '.join(
+        f'{REGION_BENCHMARK[reg]} n={n}' for reg, n in sorted(n_by_region.items())
+    )
 
     sorted_t = sorted(down_rets, key=lambda x: down_rets[x], reverse=True)
     fig, ax  = plt.subplots(figsize=(_FW, 3.8))
@@ -493,8 +502,8 @@ def fig6_downside_protection(monthly_flows):
     ax.set_xticklabels(sorted_t, rotation=45, ha='right', fontsize=8)
     ax.set_ylabel('Avg NAV Return (%)', fontsize=9)
     ax.set_title(
-        f'Downside Protection: Avg Return in ESG Market-Down Months  (n = {len(down_idx)})\n'
-        'Orange bars = Conventional benchmarks',
+        'Downside Protection: Avg Return in Benchmark Market-Down Months\n'
+        f'{n_note}',
         fontsize=10
     )
 

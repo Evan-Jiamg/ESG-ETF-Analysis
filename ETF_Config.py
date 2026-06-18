@@ -29,6 +29,16 @@ CONVENTIONAL_TICKERS = {
     'ACWI': 'Global',
 }
 
+# Official benchmark for each region — used to define market-down months
+# (avoids circular definition from using ESG sample average)
+REGION_BENCHMARK = {
+    'US':             'IVV',
+    'Developed exUS': 'IEFA',
+    'Emerging':       'IEMG',
+    'Fixed Income':   'AGG',
+    'Global':         'ACWI',
+}
+
 # iShares ESG ETF → region classification
 REGION_MAP = {
     # ESG – US
